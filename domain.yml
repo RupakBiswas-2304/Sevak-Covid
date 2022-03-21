@@ -1,0 +1,72 @@
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - problems
+  - reset:
+      triggers: action_reset
+entities:
+  - symtomp
+  - relative
+  - state
+  - h-condition
+  - duration
+  - body-part
+  - country
+responses:
+  utter_greet:
+  - text: "Hey! How are you?"
+
+  utter_cheer_up:
+  - text: "Here is something to cheer you up:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+  utter_problems_detected:
+  - text: "Hello, for better assisting you I have a few queries to ask"
+  - text: "most probably you are infected by covid 19"
+  - text: "It is possible that you are infected"
+  - text: "There is a high chance that you are covid possitive"
+  - text: "Sorry but you are covid possitive"
+
+  utter_ask_for_feaver:
+  - text: "Do you have feaver ?"
+  - text: "Hello, do you have fever also"
+
+slots :
+  symptoms :
+    type : text
+    mappings : 
+      - type : from_entity
+      entity : symtomp
+
+forms :
+  problems_form:
+    required_slots:
+      - symptomp
+
+rules:
+  - rule : Activate form
+    steps:
+    - intent : problems
+    - action : problems_form
+    - active_loop : problems_form
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
